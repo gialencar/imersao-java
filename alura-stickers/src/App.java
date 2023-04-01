@@ -12,13 +12,15 @@ public class App {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
+
+        // String apiKey = System.getenv("IMDB_API_KEY");
+        // String url = "https://imdb-api.com/en/API/Top250Movies/" + apiKey;
         String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularMovies.json";
         URI address = URI.create(url);
 
         HttpClient client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(address).GET().uri(address).build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-
         String body = response.body();
 
         var parser = new JsonParser();
@@ -37,11 +39,11 @@ public class App {
             String title = movie.get("title");
             String poster = movie.get("image");
             String ImDbRatings = movie.get("imDbRating");
-            
+
             System.out.printf("%s%s%s\n", blueBackground, title, clear);
-            System.out.printf("%sPoster:%s %s\n", bold, clear, poster);
             System.out.printf("%sNota:%s %s ", bold, clear, ImDbRatings);
             System.out.printf("%s\n", starEmoji.repeat(Math.round(Float.parseFloat(ImDbRatings))));
+            System.out.printf("%sPoster:%s %s\n", bold, clear, poster);
         }
     }
 }
