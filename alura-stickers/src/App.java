@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -9,7 +12,7 @@ import java.util.Map;
 public class App {
     /**
      * @param args
-     * @throws Exception
+     * @throws Exception - caso não consiga fazer a requisição
      */
     public static void main(String[] args) throws Exception {
 
@@ -34,16 +37,27 @@ public class App {
         String starEmoji = "\u2B50";
         String clear = "\u001b[m";
 
-        System.out.printf("\n%s%s%s%s Filmes mais populares %s%s\n", bold, greenTeal, greenBackground, star2Emoji, starEmoji, clear);
+        System.out.printf("\n%s%s%s%s Filmes mais populares %s%s\n", bold, greenTeal, greenBackground, star2Emoji,
+                starEmoji, clear);
+
+        // garantir que o diretório de saída existe
+        new File("saida").mkdir();
+
         for (Map<String, String> movie : movies) {
+
             String title = movie.get("title");
-            String poster = movie.get("image");
+            String imageURL = movie.get("image");
             String ImDbRatings = movie.get("imDbRating");
+
+            InputStream iStream = new URL(imageURL).openStream();
+            String fileName = title + ".png";
+            var geradora = new GeradorDeFigurinhas();
 
             System.out.printf("%s%s%s\n", blueBackground, title, clear);
             System.out.printf("%sNota:%s %s ", bold, clear, ImDbRatings);
             System.out.printf("%s\n", starEmoji.repeat(Math.round(Float.parseFloat(ImDbRatings))));
-            System.out.printf("%sPoster:%s %s\n", bold, clear, poster);
+            System.out.printf("%sPoster:%s %s\n", bold, clear, imageURL);
+            geradora.cria(iStream, fileName);
         }
     }
 }
