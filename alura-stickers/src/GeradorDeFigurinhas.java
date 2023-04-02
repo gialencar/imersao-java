@@ -1,6 +1,11 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +16,7 @@ import javax.imageio.ImageIO;
 public class GeradorDeFigurinhas {
 
   /**
-   * @param iStream - InputStream da imagem
+   * @param iStream  - InputStream da imagem
    * @param fileName - nome do arquivo de saída
    * @throws IOException - caso não consiga ler a imagem
    */
@@ -43,6 +48,21 @@ public class GeradorDeFigurinhas {
     int y = ((((newHeight) - fontHeight) / 2) + fontAscent) + height / 2;
     graphics.drawString(texto, x, y);
     System.out.printf(".");
+
+    FontRenderContext fontRenderContext = graphics.getFontRenderContext();
+    TextLayout textLayout = new TextLayout(texto, font, fontRenderContext);
+
+    Shape outline = textLayout.getOutline(null);
+    AffineTransform transform = graphics.getTransform();
+    transform.translate(x, y);
+    graphics.setTransform(transform);
+
+    BasicStroke outlinStroke = new BasicStroke(width * 0.004f);
+    graphics.setStroke(outlinStroke);
+
+    graphics.setColor(Color.BLACK);
+    graphics.draw(outline);
+    graphics.setClip(outline);
 
     ImageIO.write(figurinha, "png", new File("saida/" + fileName));
 
