@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -39,9 +38,6 @@ public class App {
 
         System.out.printf("\n%s%s%s%s Filmes mais populares %s%s\n", bold, greenTeal, greenBackground, star2Emoji,
                 starEmoji, clear);
-
-        // garantir que o diretório de saída existe
-        new File("saida").mkdir();
 
         for (Map<String, String> movie : movies) {
 
