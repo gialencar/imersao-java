@@ -69,6 +69,6 @@ public class GeradorDeFigurinhas {
 
     ImageIO.write(figurinha, "png", new File("../saida/" + fileName));
 
-    System.out.printf("\u001b[32;1m \u2714 Pronto!\n\n");
+    System.out.printf("\u001b[32;1m \u2714 Pronto! \u001b[m \n\n");
   }
 }
