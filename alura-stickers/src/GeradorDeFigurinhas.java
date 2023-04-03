@@ -64,8 +64,11 @@ public class GeradorDeFigurinhas {
     graphics.draw(outline);
     graphics.setClip(outline);
 
-    ImageIO.write(figurinha, "png", new File("saida/" + fileName));
+    // garantir que o diretório de saída existe
+    new File("../saida/").mkdir();
 
-    System.out.printf("\u001b[32;1m \u2714 Pronto!\n\n");
+    ImageIO.write(figurinha, "png", new File("../saida/" + fileName));
+
+    System.out.printf("\u001b[32;1m \u2714 Pronto! \u001b[m \n\n");
   }
 }
