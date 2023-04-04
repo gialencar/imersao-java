@@ -10,13 +10,10 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         // String apiKey = System.getenv("IMDB_API_KEY");
+        API api = API.IMDB_TOP_MOVIES;
 
-        // String url =
-        // "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-        // ContentExtractor extractor = new IMDBContentExtractor();
-
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/NASA-APOD.json";
-        ContentExtractor extractor = new NasaContentExtractor();
+        String url = api.getUrl();
+        ContentExtractor extractor = api.getExtractor();
 
         String json = new HTTPClient().fetchData(url);
 
@@ -26,8 +23,8 @@ public class App {
 
         for (Content content : contents) {
 
-            InputStream iStream = new URL(content.getImageURL()).openStream();
-            String fileName = content.getTitle() + ".png";
+            InputStream iStream = new URL(content.imageURL()).openStream();
+            String fileName = content.title() + ".png";
 
             geradora.cria(iStream, fileName);
         }
