@@ -26,8 +26,8 @@ public class App {
 
         for (Content content : contents) {
 
-            InputStream iStream = new URL(content.getImageURL()).openStream();
-            String fileName = content.getTitle() + ".png";
+            InputStream iStream = new URL(content.imageURL()).openStream();
+            String fileName = content.title() + ".png";
 
             geradora.cria(iStream, fileName);
         }
