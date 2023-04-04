@@ -19,7 +19,7 @@ public class HTTPClient {
       return body;
 
     } catch (IOException | InterruptedException ex) {
-      throw new RuntimeException(ex);
+      throw new HTTPClientException("Erro ao consultar a URL");
     }
 
   }
